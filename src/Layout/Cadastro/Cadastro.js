@@ -8,15 +8,14 @@ export const Cadastro = () => {
   const navigate = useNavigate();
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
-  const [turma, setTurma] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
-  const [userType, setUserType] = useState("");
+  // const [userType, setUserType] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!nome || !email || !password || !confPassword || !userType || !turma) {
+    if (!nome || !email || !password || !confPassword) {
       alert(
         "Todos os campos são obrigatórios! Preencha todos os campos antes de continuar."
       );
@@ -47,8 +46,6 @@ export const Cadastro = () => {
     setEmail("");
     setPassword("");
     setConfPassword("");
-    setUserType("");
-    setTurma("");
   };
 
   return (
@@ -72,13 +69,7 @@ export const Cadastro = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
-              <p>Digite sua turma:</p>
-              <input
-                type="text"
-                placeholder="ex: Turma A, Turma B ou Turma C"
-                onChange={(e) => setTurma(e.target.value)}
-                value={turma}
-              />
+
               <p>Crie sua senha:</p>
               <input
                 type="password"
@@ -94,25 +85,9 @@ export const Cadastro = () => {
             </div>
             <div className="radio-cadastro">
               <div className="radio-1">
-                <input
-                  type="radio"
-                  id="professor"
-                  name="user"
-                  value="professor"
-                  onChange={(e) => setUserType(e.target.value)}
-                  checked={userType === "professor"}
-                />
                 <p>Professor</p>
               </div>
               <div className="radio-2">
-                <input
-                  type="radio"
-                  id="aluno"
-                  name="user"
-                  value="aluno"
-                  onChange={(e) => setUserType(e.target.value)}
-                  checked={userType === "aluno"}
-                />
                 <p>Aluno</p>
               </div>
             </div>

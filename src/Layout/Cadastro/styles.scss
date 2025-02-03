@@ -13,6 +13,7 @@
 
     .form-cadastro {
       padding-left: 25px;
+      padding-top: 55px;
       .bnt-form {
         display: flex;
         justify-content: center;
@@ -77,24 +78,6 @@
         p {
           font-size: 23px;
           color: rgba(217, 207, 216, 0.54);
-        }
-      }
-      .radio-cadastro {
-        display: flex;
-        flex-direction: column;
-        padding-left: 250px;
-        padding-top: 15px;
-        p {
-          font-size: 23px;
-          color: rgba(217, 207, 216, 0.54);
-        }
-        .radio-1 {
-          display: flex;
-          gap: 10px;
-        }
-        .radio-2 {
-          display: flex;
-          gap: 10px;
         }
       }
     }

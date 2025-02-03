@@ -1,0 +1,108 @@
+.pagina-inicial {
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  .pagina-login {
+    //layout
+
+    width: 600px;
+    height: 100%;
+    flex-shrink: 0;
+    //style
+    background: rgba(0, 0, 0, 0.9);
+    .form-pagina {
+      box-shadow: 0.1px 0.1px 3px 1px white;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .form-form {
+        .title-form {
+          color: #6e9fe9;
+          font-family: Roboto;
+          font-size: 25px;
+          font-style: normal;
+          font-weight: 900;
+          line-height: normal;
+          letter-spacing: 0.969px;
+          margin-bottom: 30px;
+          p {
+            font-size: 15px;
+            color: rgba(217, 207, 216, 0.54);
+          }
+        }
+        .input-form {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          .icon-user {
+            height: 20px;
+            width: 20px;
+            color: aliceblue;
+            transform: translate(320px, -44px);
+          }
+          .icon-eye {
+            height: 25px;
+            width: 25px;
+            color: aliceblue;
+            transform: translate(320px, -45px);
+            cursor: pointer;
+          }
+          input {
+            //placehoder
+            color: #fff;
+            font-family: Raleway;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            padding-left: 15px;
+            padding-bottom: 10px;
+            //layout
+            height: 35px;
+            background-color: transparent;
+            outline: none;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-top: none;
+            border-left: none;
+            border-right: none;
+          }
+        }
+        .bnt-form {
+          display: flex;
+          justify-content: center;
+          margin-top: 55px;
+          button {
+            height: 50px;
+            width: 350px;
+            background-color: transparent;
+            //tipografia
+            color: #fff;
+            text-align: center;
+            font-family: Roboto;
+            font-size: 25px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            text-transform: uppercase;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 40px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    p.p-final {
+      margin-top: 30px;
+      color: #fff;
+      text-align: center;
+      font-family: Roboto;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      text-transform: uppercase;
+    }
+  }
+}

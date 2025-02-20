@@ -10,12 +10,11 @@ import { userStorage } from "../../utils/userStorage";
 import { chatStorage } from "../../utils/chatStorage";
 import { BarraLateral } from "../../components/barraLateral";
 
-// Ajuste na importação do react-syntax-highlighter
+// Importação do syntax highlighter para formatação de código nas mensagens da IA
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-// Tente primeiro com esta linha (Alternativa 1):
 import { materialOceanic } from "react-syntax-highlighter/dist/cjs/styles/prism";
-// Caso não funcione, experimente uma das alternativas no comentário acima.
 
+// Componente de mensagem individual, que exibe o conteúdo e a imagem do remetente
 const Message = ({ isUser, content, avatar }) => (
   <div className={`resposta-${isUser ? "aluno" : "ia"}`}>
     <img src={avatar} className={`icon-${isUser ? "aluno" : "ia"}`} />
@@ -31,15 +30,18 @@ const Message = ({ isUser, content, avatar }) => (
   </div>
 );
 
+// Componente de entrada de chat, onde o usuário pode digitar e enviar mensagens
 const ChatInput = ({ onSend, disabled }) => {
   const [input, setInput] = useState("");
 
+  // Função para enviar a mensagem digitada
   const handleSubmit = () => {
     if (!input.trim()) return;
     onSend(input);
     setInput("");
   };
 
+  // Permite enviar mensagens ao pressionar Enter
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -66,15 +68,16 @@ const ChatInput = ({ onSend, disabled }) => {
   );
 };
 
+// Componente principal do chat do aluno
 export const Aluno = () => {
-  const [messages, setMessages] = useState([]);
-  const user = userStorage.getUser();
-  const userId = JSON.parse(user)?.data?.id;
-  const [currentChat, setCurrentChat] = useState(chatStorage.getCurrentChat());
-  const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef(null);
+  const [messages, setMessages] = useState([]); // Estado para armazenar mensagens do chat
+  const user = userStorage.getUser(); // Obtém informações do usuário
+  const userId = JSON.parse(user)?.data?.id; // Extrai o ID do usuário
+  const [currentChat, setCurrentChat] = useState(chatStorage.getCurrentChat()); // Obtém o chat atual
+  const [isLoading, setIsLoading] = useState(false); // Estado para indicar carregamento
+  const messagesEndRef = useRef(null); // Referência para rolagem automática das mensagens
 
-  // Função auxiliar para formatar as mensagens do chat
+  // Função para formatar as mensagens do chat atual
   const formatMessages = (chat) => {
     if (!chat?.messages) return [];
     return chat.messages.map((msg) => ({
@@ -83,16 +86,19 @@ export const Aluno = () => {
     }));
   };
 
+  // Atualiza as mensagens sempre que o chat atual mudar
   useEffect(() => {
     setMessages(formatMessages(currentChat));
   }, [currentChat]);
 
+  // Faz a rolagem automática até a última mensagem sempre que houver nova mensagem
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
 
+  // Configuração da mutação para envio de mensagens
   const chatMutation = useMutation({
     mutationFn: (prompt) =>
       api.chat({
@@ -129,6 +135,7 @@ export const Aluno = () => {
     },
   });
 
+  // Função para enviar uma nova mensagem
   const handleSendMessage = (message) => {
     chatMutation.mutate(message);
   };

@@ -7,17 +7,25 @@ import { userStorage } from "../../utils/userStorage";
 import { chatStorage } from "../../utils/chatStorage";
 import "./style.css";
 
+// Componente de barra lateral para gerenciamento de chats
 export function BarraLateral({ onChatSelect }) {
+  // Estados para gerenciar hover e chat selecionado
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [selectedChatId, setSelectedChatId] = useState(null);
+
+  // Obtém o usuário armazenado no localStorage
   const user = userStorage.getUser();
+
+  // Hook de navegação para redirecionamento de rotas
   const navigate = useNavigate();
 
+  // Busca os chats do usuário utilizando React Query
   const { isFetching, data, isError, error } = useQuery({
     queryKey: ["getChatUser"],
     queryFn: () => api.chatUser(JSON.parse(user).data.id),
   });
 
+  // Função para selecionar um chat e armazená-lo no chatStorage
   const handleChatSelect = (chat) => {
     chatStorage.setCurrentChat(chat);
     setSelectedChatId(chat.chatId);
@@ -26,9 +34,10 @@ export function BarraLateral({ onChatSelect }) {
     }
   };
 
+  // Função para criar um novo chat
   const handleNewChat = () => {
     const newChat = {
-      chatId: Date.now(),
+      chatId: Date.now(), // Gera um ID único baseado no timestamp
       messages: [],
     };
     chatStorage.setCurrentChat(newChat);
@@ -38,12 +47,14 @@ export function BarraLateral({ onChatSelect }) {
     }
   };
 
+  // Função para logout, removendo dados do usuário e chats armazenados
   const handleLogout = () => {
     userStorage.removeUser();
     chatStorage.clearCurrentChat();
-    navigate("/", { replace: true });
+    navigate("/", { replace: true }); // Redireciona para a página inicial
   };
 
+  // Renderiza um item da lista de chats
   const renderChatItem = (item, index) => {
     const isSelected = selectedChatId === item.chatId;
     const isHovered = hoveredIndex === index;
@@ -64,10 +75,12 @@ export function BarraLateral({ onChatSelect }) {
     );
   };
 
+  // Se a requisição ainda está carregando, exibe uma mensagem de carregamento
   if (isFetching) {
     return <div>Carregando...</div>;
   }
 
+  // Se ocorreu um erro, exibe a mensagem de erro
   if (isError) {
     return <div>Erro: {error.message}</div>;
   }
@@ -78,19 +91,23 @@ export function BarraLateral({ onChatSelect }) {
         <h1>Bem-vindo à IA</h1>
         <h1>do DEBUGBOX</h1>
       </div>
+
+      {/* Botão para iniciar um novo chat */}
       <button onClick={handleNewChat} className="button button-new-chat">
         Novo Chat
       </button>
+
+      {/* Renderiza o histórico de chats */}
       <div className="historico">{data.map(renderChatItem)}</div>
 
       <div className="bnt-duvida">
+        {/* Botão de logout */}
         <button onClick={handleLogout} className="button button-logout">
           Sair
         </button>
-        {/* 
-        // tirei a imagem do logo pq ela estava cortando a lista de chats em tela pequena, mas se quiser colocar de volta é só descomentar
-        <img src={LogoDebug} alt="Logo Debug" />
-        */}
+
+        {/* Imagem do logo (comentada para evitar sobreposição em telas pequenas) */}
+        {/* <img src={LogoDebug} alt="Logo Debug" /> */}
       </div>
     </div>
   );
